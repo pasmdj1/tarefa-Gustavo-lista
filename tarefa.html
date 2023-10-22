@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Tarefas</title>
+</head>
+<body>
+
+<h1>Lista de Tarefas</h1>
+
+<!-- Formulário para adicionar nova tarefa -->
+<form id="formTarefa">
+    <input type="text" id="novaTarefa" required>
+    <button type="submit">Adicionar Tarefa</button>
+</form>
+
+<!-- Espaço para exibir a lista de tarefas -->
+<ul id="listaTarefas"></ul>
+
+<script>
+    // Função para adicionar tarefa
+    function adicionarTarefa() {
+        const novaTarefa = document.getElementById('novaTarefa').value;
+        if (novaTarefa.trim() !== '') {
+            const listaTarefas = document.getElementById('listaTarefas');
+            const novaLi = document.createElement('li');
+            novaLi.innerHTML = `
+                ${novaTarefa}
+                <button class="editar" onclick="editarTarefa(this)">Editar</button>
+                <button class="excluir" onclick="excluirTarefa(this)">Excluir</button>
+            `;
+            listaTarefas.appendChild(novaLi);
+            document.getElementById('novaTarefa').value = '';
+        }
+        return false;
+    }
+
+    // Função para editar tarefa
+    function editarTarefa(botao) {
+        const novoTexto = prompt('Editar tarefa:', botao.parentElement.firstChild.textContent);
+        if (novoTexto !== null && novoTexto.trim() !== '') {
+            botao.parentElement.firstChild.textContent = novoTexto;
+        }
+    }
+
+    // Função para excluir tarefa
+    function excluirTarefa(botao) {
+        if (confirm('Tem certeza que deseja excluir esta tarefa?')) {
+            botao.parentElement.remove();
+        }
+    }
+
+    // Adiciona um ouvinte de evento para o formulário
+    document.getElementById('formTarefa').addEventListener('submit', function(e) {
+        e.preventDefault();
+        adicionarTarefa();
+    });
+</script>
+
+</body>
+</html>
+
